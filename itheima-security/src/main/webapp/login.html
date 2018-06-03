@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>登陆</title>
+</head>
+<body>	
+	<!-- security 默认提交的form表单action必须为 /login ，能自定义的吗，可以！需要在security.xml配置
+		method='POST' ： 必须的！
+		name='username' ： 默认登录名 username
+		name='password' : 默认登录密码password
+	-->
+	<form action='/login' method='POST'>
+		<table>
+			<tr>
+				<td>用户名:</td>
+				<td><input type='text' name='username' value=''></td>
+			</tr>
+			<tr>
+				<td>密码:</td>
+				<td><input type='password' name='password' /></td>
+			</tr>
+			<tr>
+				<td colspan='2'><input name="submit" type="submit"
+					value="登陆" /></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

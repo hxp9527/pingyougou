@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<!-- 配置放行的页面
+		security="none" 不被拦截：放行的！
+	 -->
+	<http pattern="/login.html" security="none"></http>
+	<http pattern="/login_error.html" security="none"></http>
+		
+	<!-- 配置拦截的URL 
+		配置拦截的请求 http
+		intercept-url : 拦截的URL
+		pattern： 设置拦截的路径
+				/*   : 拦截URL的一级 /login.html 不能跨级拦截 比如：/brand/findAll.do
+				/**  :
+		use-expressions 是支持Spring的Spel表达式，默认是true开启的，关闭！
+	-->	
+	<http use-expressions="false">
+		<!-- 设置哪个权限是来访问的 -->
+		<intercept-url pattern="/**" access="ROLE_ADMIN"/>
+		<!-- 开启登录页面 
+			login-page : 指定自己的登录页面
+			default-target-url ： 登录完成后，跳转到页面
+			authentication-failure-url : 如果登录失败跳转的页面
+		-->
+		<form-login login-page="/login.html" default-target-url="/index.html" 
+			authentication-failure-url="/login_error.html"
+		/>
+		<!-- 配置CSRF的恶意访问 -->
+		<csrf disabled="true"/>
+	</http>
+	<!-- 配置认证类（认证管理） 
+		authorities="" : 设置此用户是哪个权限的 "ROLE_"
+	-->
+	<authentication-manager>
+		<authentication-provider>
+			<user-service>
+				<user name="admin" authorities="ROLE_ADMIN" password="123456"/>
+			</user-service>
+		</authentication-provider>
+	</authentication-manager>
+	
+</beans:beans>

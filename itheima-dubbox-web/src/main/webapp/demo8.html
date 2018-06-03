@@ -1,0 +1,45 @@
+<html>
+    <head>
+    <title>demo8-循环对象数组</title>
+    <script src="angular.min.js"></script>
+
+    <script>
+    
+        //定义自己的模板:参数说明：1、指定模板名称；2、指定已有的模板（添加已有的模板）:今天：分页模板
+        var app=angular.module('myApp',[]);
+        //设置控制器；参数说明：1、控制器的名称；2、控制器中的方法:方法是多个；
+        //Model : 数据：对象：作用：View和Controller层之间传递数据用的$scope
+        //$http ：内置服务来访问http中URL的
+        app.controller('myController',function($scope,$http){
+           $scope.findAll=function(){
+        	   $http.get('data.json').success(function(response){
+	               $scope.list = response;
+        	   });
+           }
+        });
+    
+    </script>
+
+    </head>
+    <!-- 在body中添加ng-app 指定body使用AngularJS的ng模板的命令 
+        ng-init : 初始化 model中的值
+        ng-controller: 指定angularJS中的控制器
+    -->
+    <body ng-app='myApp' ng-controller="myController" ng-init="findAll()" >
+        
+        <table>
+            <tr>
+                <td>姓名</td>
+                <td>语文</td>
+                <td>数学</td>
+            </tr>
+            <!-- ng-repeat：循环用的 规则： 元素名 in  集合名 -->
+            <tr ng-repeat="entity in list">
+                <td>{{entity.name}}</td>
+                <td>{{entity.yuwen}}</td>
+                <td>{{entity.shuxue}}</td>
+            </tr>
+        </table>
+
+    </body>
+</html>

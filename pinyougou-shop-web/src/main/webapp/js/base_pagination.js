@@ -1,0 +1,1 @@
+var app = angular.module('pinyougou',['pagination']);//设置分页模块
